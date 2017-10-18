@@ -8,16 +8,16 @@ namespace SnakeGame
 {
     class Health
     {
-        public Random Random { get; set; }
+        private int MaxWidth;
+        private int MaxHeight;
 
-        private int MaxWidth { get; set; }
-        private int MaxHeight { get; set; }
         public Coordinates HealthPosition { get; set; }
+        public static Random Random;
 
-        public Health(int MaxWidth,int MaxHeight)
+        public Health()
         {
-            this.MaxWidth = MaxWidth - 1;
-            this.MaxHeight = MaxHeight - 1;
+            this.MaxWidth = Helper.MaxConsoleWidth - 5;
+            this.MaxHeight = Helper.MaxConsoleHeight - 5;
             HealthPosition = new Coordinates();
             Random = new Random();
 
@@ -35,14 +35,14 @@ namespace SnakeGame
             if (HealthPosition != null)
             {
                 Console.ForegroundColor = ConsoleColor.Green;
-                Helper.WriteAt(HealthPosition.CoordinateX, HealthPosition.CoordinateY, (char)215);
+                Helper.WriteAt(HealthPosition, (char)215);
                 Console.ForegroundColor = ConsoleColor.White;
             }
         }
 
         public void DeleteHealth()
         {
-            Helper.WriteAt(HealthPosition.CoordinateX, HealthPosition.CoordinateY,' ');
+            Helper.WriteAt(HealthPosition,' ');
         }
 
     }

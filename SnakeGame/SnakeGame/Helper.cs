@@ -12,25 +12,20 @@ namespace SnakeGame
         Up,
         Left,
         Down,
-        Non
     }
 
     static class Helper
     {
-        public static void WriteAt(int x, int y, char charecter = '*')
+        public static int MaxConsoleWidth { get; } = Console.WindowWidth;
+        public static int MaxConsoleHeight { get; } = Console.WindowHeight;
+
+        public static void WriteAt(Coordinates cord, char charecter = '*')
         {
-            try
-            {
-                Console.SetCursorPosition(x, y);
-                Console.Write(charecter);
-            }
-            catch (ArgumentOutOfRangeException e)
-            {
-                Console.Clear();
-                Console.WriteLine(e.Message);
-            }
+           Console.SetCursorPosition(cord.CoordinateX, cord.CoordinateY);
+           Console.Write(charecter);
         }
     }
+
     class Coordinates
     {
         public int CoordinateX { get; set; }

@@ -10,7 +10,7 @@ namespace SnakeGame
     {
         static void Main(string[] args)
         {
-            GameController g = new GameController();
+            GameController SnakeGame = new GameController();
         }
     }
 }

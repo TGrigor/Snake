@@ -9,11 +9,10 @@ namespace SnakeGame
 {
     class Snake
     {
-        public int Length { get; set; }
-        public int Speed { get; set; }
-        private List<Coordinates> SnakeCoordinate { get; set; }
+        private int Length;
+        private int Speed;
+        private List<Coordinates> SnakeCoordinate;
         public Coordinates SnakePosition { get; set; }
-
         public Direction Direction { get; set; }
 
         public Snake(int snakeLength, int snakeSpeed, Coordinates startIndex)
@@ -31,7 +30,7 @@ namespace SnakeGame
                 setX = startIndex.CoordinateX + i;
                 setY = startIndex.CoordinateY;
                 SnakeCoordinate.Add(new Coordinates() { CoordinateX = setX, CoordinateY = setY });
-                Helper.WriteAt(setX, setY);
+                Helper.WriteAt(new Coordinates() { CoordinateX = setX, CoordinateY = setY } );
             }
         }
 
@@ -72,19 +71,30 @@ namespace SnakeGame
             Thread.Sleep(Speed);
 
             //Add new charecter
-            Helper.WriteAt(newCharecter.CoordinateX, newCharecter.CoordinateY);
+            Helper.WriteAt(newCharecter);
             SnakeCoordinate.Add(newCharecter);
 
             //Delete first charecter
-            Helper.WriteAt(SnakeCoordinate[0].CoordinateX, SnakeCoordinate[0].CoordinateY, ' ');
+            Helper.WriteAt(SnakeCoordinate[0], ' ');
             SnakeCoordinate.RemoveAt(0);            
         }
 
         public void AddNewCharecter(Coordinates newCharecter)
         {
             //Add new charecter
-            Helper.WriteAt(newCharecter.CoordinateX, newCharecter.CoordinateY);
+            Helper.WriteAt(newCharecter);
             SnakeCoordinate.Add(newCharecter);
+        }
+
+        public void AddHeartToSnake()
+        {
+            var charecterPosition = GetNewPosition();
+            AddNewCharecter(charecterPosition);
+        }
+
+        public void AddSpeed(int speed = 10)
+        {
+            this.Speed += speed;
         }
     }    
 }
