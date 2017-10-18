@@ -9,6 +9,7 @@ namespace SnakeGame
     class GameController
     {
         private int HeartCount = 3;
+        private List<Coordinates> FrameList;
         private Snake _Snake;
         private Health _Health;
 
@@ -16,6 +17,8 @@ namespace SnakeGame
         {
             Console.CursorVisible = false;
             Console.SetWindowSize(Helper.MaxConsoleWidth, Helper.MaxConsoleHeight);
+
+            FrameList = new List<Coordinates>();
 
             var startIndex = new Coordinates() { CoordinateX = 2, CoordinateY = 2 };
             _Snake = new Snake(HeartCount, 100, startIndex);
@@ -49,7 +52,7 @@ namespace SnakeGame
 
         }
 
-        private void EventController()
+        private bool EventController()
         {
             while (true)
             {
@@ -64,6 +67,12 @@ namespace SnakeGame
                     _Health.GetRandomPosition();
                     _Health.PrintHealth();
                     PrintPointCount();
+                }
+
+                if (FrameList.Where(f => f.CoordinateX == _Snake.SnakePosition.CoordinateX && f.CoordinateY == _Snake.SnakePosition.CoordinateY).ToList().Any())
+                {
+                    Console.Clear();
+                    return false;
                 }
             }
         }
@@ -100,21 +109,25 @@ namespace SnakeGame
 
             for (int i = 0; i < Helper.MaxConsoleWidth; i++)
             {
+                FrameList.Add(new Coordinates() { CoordinateX = i, CoordinateY = 1 });
                 Console.SetCursorPosition(i, 1);
                 Console.Write("_");
             }
             for (int i = 0; i < Helper.MaxConsoleWidth; i++)
             {
+                FrameList.Add(new Coordinates() { CoordinateX = i, CoordinateY = Helper.MaxConsoleHeight - 1 });
                 Console.SetCursorPosition(i, Helper.MaxConsoleHeight - 1);
                 Console.Write("_");
             }
             for (int i = 0; i < Helper.MaxConsoleHeight; i++)
             {
+                FrameList.Add(new Coordinates() { CoordinateX = 0, CoordinateY = i });
                 Console.SetCursorPosition(0, i);
                 Console.Write("|");
             }
             for (int i = 0; i < Helper.MaxConsoleHeight; i++)
             {
+                FrameList.Add(new Coordinates() { CoordinateX = Helper.MaxConsoleWidth - 1, CoordinateY = i });
                 Console.SetCursorPosition(Helper.MaxConsoleWidth - 1, i);
                 Console.Write("|");
             }
